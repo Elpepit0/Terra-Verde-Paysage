@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container } from './ui/Container';
 import { Leaf } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <header className="fixed w-full z-50 bg-[#4A5D23]/90 backdrop-blur-sm">
+    <header
+      className={`fixed w-full z-50 backdrop-blur-sm transition-colors duration-300 ${
+        isScrolled ? 'bg-[#4A5D23]/90' : 'bg-transparent'
+      }`}
+    >
       <Container>
         <nav className="flex items-center justify-between py-4">
           <div className="flex items-center space-x-2 text-white">
@@ -48,31 +62,33 @@ export const Navbar: React.FC = () => {
           </button>
         </nav>
 
-        {isOpen && (
-          <div className="md:hidden py-4">
-            <a
-              href="#services"
-              className="block text-white py-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Nos services
-            </a>
-            <a
-              href="#about"
-              className="block text-white py-2"
-              onClick={() => setIsOpen(false)}
-            >
-              À propos
-            </a>
-            <a
-              href="#contact"
-              className="block text-white py-2"
-              onClick={() => setIsOpen(false)}
-            >
-              Contact
-            </a>
-          </div>
-        )}
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+            isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+          }`}
+        >
+          <a
+            href="#services"
+            className="block text-white py-2"
+            onClick={() => setIsOpen(false)}
+          >
+            Nos services
+          </a>
+          <a
+            href="#about"
+            className="block text-white py-2"
+            onClick={() => setIsOpen(false)}
+          >
+            À propos
+          </a>
+          <a
+            href="#contact"
+            className="block text-white py-2"
+            onClick={() => setIsOpen(false)}
+          >
+            Contact
+          </a>
+        </div>
       </Container>
     </header>
   );
