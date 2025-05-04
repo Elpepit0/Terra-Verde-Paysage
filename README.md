@@ -4,7 +4,7 @@
 
 ## 🖼️ Aperçu
 
-🔗 [Voir le site](https://terraverdepaysage.metlify.app/)
+🔗 [Voir le site](https://terraverdepaysage.netlify.app/)
 
 ## 🎯 Objectif
 
